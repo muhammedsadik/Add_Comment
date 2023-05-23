@@ -1,0 +1,84 @@
+﻿@model CartModel
+
+<h1>Shopping Cart</h1>
+<hr>
+@if (Model.CartItems.Count > 0)
+{
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="text-center" style="width: 170px;">
+        <h4>Cart Items</h4>
+        <hr class="bg-warning">
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var item in Model.CartItems)
+          {
+            <tr>
+              <td>
+                <img src="~/img/@item.ImageUrl" width="90">
+              </td>
+              <td>@item.Name</td>
+              <td>@item.Price</td>
+              <td>@item.Quantity</td>
+              <td>@(item.Quantity * item.Price)</td>
+              <td>
+                <form action="/cart/DeleteFromCart" method="post">
+                  <input type="hidden" name="productId" value="@item.ProductId">
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-4">
+      <div class="text-left" style="width: 190px;">
+        <h4 class="text-center">Cart Summary</h4>
+        <hr class="bg-warning">
+      </div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Cart Total</th>
+            <td>@Model.TotalPrice().ToString("c")</td>
+          </tr>
+          <tr>
+            <th>Shipping</th>
+            <td>Free</td>
+          </tr>
+          <tr>
+            <th>Order Total</th>
+            <td>@Model.TotalPrice().ToString("c")</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center" style="display: inline;">
+        <a href="/" class="btn btn-primary btn-group-sm"><i class="fa-solid fa-circle-arrow-left me-1"></i>Continue Shopping</a>
+      </div>
+      <div class="text-center" style="display: inline;">
+        <a href="/checkout" class="btn btn-primary btn-group-sm">Checkout<i class="fa-solid fa-circle-arrow-right ms-1"></i></a>
+      </div>
+    </div>
+  </div>
+}
+else
+{
+  <div class="alert alert-info">
+    You have not selected any products yet
+  </div>
+}

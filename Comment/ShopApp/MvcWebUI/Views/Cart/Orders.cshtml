@@ -1,0 +1,72 @@
+﻿@model List<OrderListModel>
+
+<h1>Orders</h1>
+
+@foreach (var order in Model)
+{
+  <table class="table table-bordered table-sm mb-3">
+    <thead class="bg-primary bg-opacity-50">
+      <tr>
+        <td colspan="2">Order Id: #@order.OrderNumber</td>
+        <td width="300">Price</td>
+        <td>Quantity</td>
+        <td width="150">Comment</td>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var orderItem in order.OrderItems)
+      {
+        <tr>
+          <td><img src="~/img/@orderItem.ImageUrl" width="50"></td>
+          <td width="300">@orderItem.Name</td>
+          <td>@orderItem.Price</td>
+          <td>@orderItem.Quantity</td>
+          <td>
+            @if (orderItem.IsCommented)
+            {
+              <span>Commented</span>
+            }
+            else
+            {
+              <a href="/comment/create/@orderItem.OrderItemId" class="btn btn-sm bg-primary bg-opacity-50 ms-3">Comment</a>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Customer Name</td>
+        <td>@order.FirstName @order.LastName</td>
+        <td colspan="6">Total: @order.TotalPrice().ToString("c")</td>
+      </tr>
+      <tr>
+        <td colspan="2">Address</td>
+        <td>@order.Address</td>
+      </tr>
+      <tr>
+        <td colspan="2">Email</td>
+        <td>@order.Email</td>
+      </tr>
+      <tr>
+        <td colspan="2">Phone</td>
+        <td>@order.Phone</td>
+      </tr>
+      <tr>
+        <td colspan="2">Order Status</td>
+        <td>@order.OrderState</td>
+      </tr>
+      <tr>
+        <td colspan="2">Payment</td>
+        <td>@order.PaymentType</td>
+      </tr>
+    </tfoot>
+  </table>
+}
+
+
+
+
+
+
+

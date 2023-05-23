@@ -1,0 +1,34 @@
+﻿@model ProductListModel
+
+<div class="card mb-2">
+
+  <img class="card-img-top" src="~/img/@Model.ImageUrl">
+
+  <div class="card-body">
+    <h5 class="card-title">@Model.Name</h5>
+    <span class="text-muted">
+      @Model.Price <i class="fa-solid fa-turkish-lira-sign"></i>
+
+      <span style="display: inline;" class="ms-3">@Model.CommentCount comment</span>
+      
+    </span>
+  </div>
+
+  <div class="card-footer text-center">
+    <a asp-controller="shop" asp-action="Details" asp-route-url="@Model.Url" class="btn btn-primary btn-sm">Details</a>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+      <form asp-controller="Cart" asp-action="AddToCart" style="display: inline;" method="post">
+        <input type="hidden" name="productId" value="@Model.ProductId">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn btn-primary btn-sm">Add To Cart</button>
+      </form>
+
+      
+    }
+
+  </div>
+
+</div>
+
